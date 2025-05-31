@@ -15,6 +15,7 @@ import { Settings } from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import { EmployeeProvider } from "./context/EmployeeContext";
 import { PayrollProvider } from "./context/PayrollContext";
+import { FeedbackProvider } from "./context/FeedbackContext";
 
 const queryClient = new QueryClient();
 
@@ -23,22 +24,24 @@ const App = () => (
     <TooltipProvider>
       <EmployeeProvider>
         <PayrollProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Dashboard />} />
-                <Route path="employees" element={<Employees />} />
-                <Route path="leave" element={<Leave />} />
-                <Route path="payroll" element={<Payroll />} />
-                <Route path="performance" element={<Performance />} />
-                <Route path="reports" element={<Reports />} />
-                <Route path="settings" element={<Settings />} />
-              </Route>
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
+          <FeedbackProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Dashboard />} />
+                  <Route path="employees" element={<Employees />} />
+                  <Route path="leave" element={<Leave />} />
+                  <Route path="payroll" element={<Payroll />} />
+                  <Route path="performance" element={<Performance />} />
+                  <Route path="reports" element={<Reports />} />
+                  <Route path="settings" element={<Settings />} />
+                </Route>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+          </FeedbackProvider>
         </PayrollProvider>
       </EmployeeProvider>
     </TooltipProvider>

@@ -6,11 +6,13 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { 
   Plus, Search, Filter, User, Edit, Trash2, 
-  Eye, MoreVertical, ChevronDown 
+  Eye, MoreVertical, ChevronDown, Star 
 } from 'lucide-react';
 import { EmployeeForm } from "@/components/employees/EmployeeForm";
 import { useEmployees } from '@/context/EmployeeContext';
 import { Employee } from '@/context/EmployeeContext';
+import { EmployeeDetail } from "@/components/EmployeeDetail";
+import { InstantFeedback } from "@/components/feedback/InstantFeedback";
 import { 
   AlertDialog,
   AlertDialogAction,
@@ -194,15 +196,19 @@ export const Employees = () => {
                 <Button 
                   variant="outline" 
                   size="sm" 
-                  className="flex-1 flex items-center justify-center gap-1"
+                  className="flex items-center justify-center gap-1"
                   onClick={() => handleView(employee)}
                 >
                   <Eye className="h-4 w-4" />
                   View
                 </Button>
+                <InstantFeedback 
+                  employeeId={employee.id} 
+                  employeeName={employee.name} 
+                />
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="sm" className="flex-1 flex items-center justify-center gap-1">
+                    <Button variant="outline" size="sm" className="flex items-center justify-center gap-1">
                       <MoreVertical className="h-4 w-4" />
                       Actions
                     </Button>
@@ -243,72 +249,15 @@ export const Employees = () => {
             <DialogHeader>
               <DialogTitle>Employee Details</DialogTitle>
             </DialogHeader>
-            <div className="space-y-4">
-              <div className="flex justify-center mb-4">
-                <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center">
-                  <User className="h-10 w-10 text-blue-600" />
-                </div>
-              </div>
-              
-              <div className="text-center mb-4">
-                <h2 className="text-xl font-bold">{viewingEmployee.name}</h2>
-                <p className="text-gray-600">{viewingEmployee.position}</p>
-                <Badge className={getStatusColor(viewingEmployee.status)} className="mt-2">
-                  {viewingEmployee.status}
-                </Badge>
-              </div>
-              
-              <div className="space-y-2">
-                <div className="flex justify-between py-2 border-b">
-                  <span className="font-medium">Email</span>
-                  <span>{viewingEmployee.email}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b">
-                  <span className="font-medium">Department</span>
-                  <span>{viewingEmployee.department}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b">
-                  <span className="font-medium">Join Date</span>
-                  <span>{viewingEmployee.joinDate}</span>
-                </div>
-                {viewingEmployee.phone && (
-                  <div className="flex justify-between py-2 border-b">
-                    <span className="font-medium">Phone</span>
-                    <span>{viewingEmployee.phone}</span>
-                  </div>
-                )}
-                {viewingEmployee.employeeId && (
-                  <div className="flex justify-between py-2 border-b">
-                    <span className="font-medium">Employee ID</span>
-                    <span>{viewingEmployee.employeeId}</span>
-                  </div>
-                )}
-                {viewingEmployee.salary && (
-                  <div className="flex justify-between py-2 border-b">
-                    <span className="font-medium">Salary</span>
-                    <span>${viewingEmployee.salary.toLocaleString()}</span>
-                  </div>
-                )}
-                {viewingEmployee.address && (
-                  <div className="flex justify-between py-2 border-b">
-                    <span className="font-medium">Address</span>
-                    <span>{viewingEmployee.address}</span>
-                  </div>
-                )}
-              </div>
-              
-              <div className="flex justify-end gap-2 mt-4">
-                <Button 
-                  variant="outline" 
-                  onClick={() => {
-                    setViewingEmployee(null);
-                    handleEdit(viewingEmployee.id);
-                  }}
-                >
-                  Edit
-                </Button>
-                <Button onClick={() => setViewingEmployee(null)}>Close</Button>
-              </div>
+            <div>
+              <EmployeeDetail 
+                employee={viewingEmployee} 
+                onEdit={(id) => {
+                  setViewingEmployee(null);
+                  handleEdit(id);
+                }}
+                onClose={() => setViewingEmployee(null)}
+              />
             </div>
           </DialogContent>
         </Dialog>
