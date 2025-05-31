@@ -8,29 +8,36 @@ import { Layout } from "./components/Layout";
 import { Dashboard } from "./pages/Dashboard";
 import { Employees } from "./pages/Employees";
 import { Leave } from "./pages/Leave";
+import { Payroll } from "./pages/Payroll";
+import { Performance } from "./pages/Performance";
+import { Reports } from "./pages/Reports";
+import { Settings } from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import { EmployeeProvider } from "./context/EmployeeContext";
 
 const queryClient = new QueryClient();
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="employees" element={<Employees />} />
-            <Route path="leave" element={<Leave />} />
-            <Route path="payroll" element={<div className="p-6"><h1 className="text-2xl font-bold">Payroll Management</h1><p>Coming soon...</p></div>} />
-            <Route path="performance" element={<div className="p-6"><h1 className="text-2xl font-bold">Performance Management</h1><p>Coming soon...</p></div>} />
-            <Route path="reports" element={<div className="p-6"><h1 className="text-2xl font-bold">Reports & Analytics</h1><p>Coming soon...</p></div>} />
-            <Route path="settings" element={<div className="p-6"><h1 className="text-2xl font-bold">Settings</h1><p>Coming soon...</p></div>} />
-          </Route>
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <EmployeeProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="employees" element={<Employees />} />
+              <Route path="leave" element={<Leave />} />
+              <Route path="payroll" element={<Payroll />} />
+              <Route path="performance" element={<Performance />} />
+              <Route path="reports" element={<Reports />} />
+              <Route path="settings" element={<Settings />} />
+            </Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </EmployeeProvider>
     </TooltipProvider>
   </QueryClientProvider>
 );

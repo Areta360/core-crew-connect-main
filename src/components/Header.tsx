@@ -1,17 +1,24 @@
-
 import React from 'react';
-import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Bell, User } from 'lucide-react';
+import { Menu, Bell, User } from 'lucide-react';
+import { useSidebar } from "@/components/ui/sidebar";
 
 export const Header = () => {
+  const { isOpen, setIsOpen } = useSidebar();
+
   return (
-    <header className="border-b bg-white px-6 py-4 flex items-center justify-between">
-      <div className="flex items-center gap-4">
-        <SidebarTrigger />
-        <h1 className="text-2xl font-semibold text-gray-800">HR Management System</h1>
+    <header className="h-16 border-b bg-white flex items-center px-4 justify-between">
+      <div className="flex items-center">
+        <Button 
+          variant="ghost" 
+          size="icon" 
+          onClick={() => setIsOpen(!isOpen)}
+          className="mr-4"
+        >
+          <Menu className="h-5 w-5" />
+        </Button>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2">
         <Button variant="ghost" size="icon">
           <Bell className="h-5 w-5" />
         </Button>
