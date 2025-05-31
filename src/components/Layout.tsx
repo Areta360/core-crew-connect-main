@@ -10,9 +10,9 @@ export const Layout = () => {
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50">
         <AppSidebar />
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col w-full">
           <Header />
-          <main className="flex-1 p-6">
+          <main className="flex-1 p-6 w-full">
             <Outlet />
           </main>
         </div>

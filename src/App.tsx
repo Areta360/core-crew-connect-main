@@ -14,6 +14,7 @@ import { Reports } from "./pages/Reports";
 import { Settings } from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 import { EmployeeProvider } from "./context/EmployeeContext";
+import { PayrollProvider } from "./context/PayrollContext";
 
 const queryClient = new QueryClient();
 
@@ -21,22 +22,24 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <EmployeeProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Dashboard />} />
-              <Route path="employees" element={<Employees />} />
-              <Route path="leave" element={<Leave />} />
-              <Route path="payroll" element={<Payroll />} />
-              <Route path="performance" element={<Performance />} />
-              <Route path="reports" element={<Reports />} />
-              <Route path="settings" element={<Settings />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+        <PayrollProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="employees" element={<Employees />} />
+                <Route path="leave" element={<Leave />} />
+                <Route path="payroll" element={<Payroll />} />
+                <Route path="performance" element={<Performance />} />
+                <Route path="reports" element={<Reports />} />
+                <Route path="settings" element={<Settings />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </PayrollProvider>
       </EmployeeProvider>
     </TooltipProvider>
   </QueryClientProvider>

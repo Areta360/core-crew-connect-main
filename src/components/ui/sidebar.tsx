@@ -10,16 +10,13 @@ interface SidebarContextValue {
 const SidebarContext = React.createContext<SidebarContextValue | undefined>(undefined);
 
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
-  const [isOpen, setIsOpen] = React.useState(true);
+  const [isOpen, setIsOpen] = React.useState(false);
   const isMobile = useMobile();
 
   React.useEffect(() => {
-    if (isMobile) {
-      setIsOpen(false);
-    } else {
-      setIsOpen(true);
-    }
-  }, [isMobile]);
+    // Always start with sidebar closed
+    setIsOpen(false);
+  }, []);
 
   return (
     <SidebarContext.Provider value={{ isOpen, setIsOpen }}>
@@ -38,14 +35,12 @@ export function useSidebar() {
 
 export function Sidebar({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) {
   const { isOpen } = useSidebar();
-  const isMobile = useMobile();
 
   return (
     <div
       className={cn(
-        "fixed inset-y-0 left-0 z-20 flex flex-col bg-white transition-all duration-300 ease-in-out",
-        isOpen ? "w-64" : "w-0",
-        isMobile && !isOpen && "hidden",
+        "fixed inset-y-0 left-0 z-20 flex flex-col bg-white shadow-lg transition-all duration-300 ease-in-out",
+        isOpen ? "w-64 translate-x-0" : "w-64 -translate-x-full",
         className
       )}
       {...props}
